@@ -3466,7 +3466,7 @@ impl Niri {
             .outputs()
             .map(|output| (output, self.global_space.output_geometry(output).unwrap()))
             .filter(|(_, geo)| center(*geo).x < center(current_geo).x && geo.overlaps(extended_geo))
-            .min_by_key(|(_, geo)| center(current_geo).x - center(*geo).x)
+            .min_by_key(|(_, geo)| center(current_geo).y - center(*geo).y)
             .map(|(output, _)| output)
             .cloned()
     }
@@ -3482,7 +3482,7 @@ impl Niri {
             .outputs()
             .map(|output| (output, self.global_space.output_geometry(output).unwrap()))
             .filter(|(_, geo)| center(*geo).x > center(current_geo).x && geo.overlaps(extended_geo))
-            .min_by_key(|(_, geo)| center(*geo).x - center(current_geo).x)
+            .min_by_key(|(_, geo)| center(*geo).y - center(current_geo).y)
             .map(|(output, _)| output)
             .cloned()
     }
@@ -3498,7 +3498,7 @@ impl Niri {
             .outputs()
             .map(|output| (output, self.global_space.output_geometry(output).unwrap()))
             .filter(|(_, geo)| center(*geo).y < center(current_geo).y && geo.overlaps(extended_geo))
-            .min_by_key(|(_, geo)| center(current_geo).y - center(*geo).y)
+            .min_by_key(|(_, geo)| center(current_geo).x - center(*geo).x)
             .map(|(output, _)| output)
             .cloned()
     }
@@ -3514,7 +3514,7 @@ impl Niri {
             .outputs()
             .map(|output| (output, self.global_space.output_geometry(output).unwrap()))
             .filter(|(_, geo)| center(*geo).y > center(current_geo).y && geo.overlaps(extended_geo))
-            .min_by_key(|(_, geo)| center(*geo).y - center(current_geo).y)
+            .min_by_key(|(_, geo)| center(*geo).x - center(current_geo).x)
             .map(|(output, _)| output)
             .cloned()
     }

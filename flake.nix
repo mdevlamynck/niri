@@ -175,10 +175,7 @@
           pkgs = nixpkgsFor.${system};
           rust-bin = rust-overlay.lib.mkRustBin { } pkgs;
           inherit (self.packages.${system}) niri;
-        in
-        {
-          default = pkgs.mkShell {
-            packages = [
+          rust = 
               # We don't use the toolchain from nixpkgs
               # because we prefer a nightly toolchain
               # and we *require* a nightly rustfmt
@@ -197,7 +194,12 @@
                     "rust-src"
                   ];
                 }
-              ))
+              ));
+        in
+        {
+          default = pkgs.mkShell {
+            packages = [
+              rust
             ];
 
             nativeBuildInputs = [
@@ -218,6 +220,10 @@
               # This should only be set with `CARGO_BUILD_RUSTFLAGS="$CARGO_BUILD_RUSTFLAGS -C your-flags"`
               CARGO_BUILD_RUSTFLAGS = niri.RUSTFLAGS;
             };
+
+            shellHook = ''
+              ln -fsT ${rust} ./.direnv/rust
+            '';
           };
         }
       );
